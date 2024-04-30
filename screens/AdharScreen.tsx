@@ -1,13 +1,67 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { ScreenTitle } from "components";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { RadioButton, ScreenTitle } from "components";
 import { OtpInput } from "features";
+import { useSelector, RootState } from "../store";
+import { Button } from "react-native-paper";
 
 const AdharScreen = ({ navigation }) => {
+  const { limits, otpFields, card, verificationMethods } = useSelector(
+    (state: RootState) => state.abha
+  );
+
   return (
     <View style={styles.screen}>
-      <ScreenTitle />
-      <OtpInput navigation={navigation} />
+      <View style={{ minHeight: 70 }}>
+        <ScreenTitle
+          title={"You're about to create a new abha address using"}
+        />
+      </View>
+      <View style={{ backgroundColor: "#e8effd", flex: 1 }}>
+        <OtpInput
+          limits={limits}
+          otpFields={otpFields}
+          card={card}
+          verifyButton={
+            <Button
+              mode="contained"
+              buttonColor={"#0743A1"}
+              style={styles.button}
+            >
+              Verify and continue
+            </Button>
+          }
+          footer={
+            <View style={styles.cardFooter}>
+              <Text style={styles.footerText}></Text>
+              <TouchableOpacity
+                onPress={() =>
+                  console.log("Contact customer care for assitance")
+                }
+              >
+                <Text style={styles.footerText}>
+                  Forgetten Your ABHA Number ?
+                </Text>
+              </TouchableOpacity>
+            </View>
+          }
+        />
+        <View style={{ flex: 1 }}>
+          <RadioButton
+            data={verificationMethods}
+            onSelect={(method) => console.log(method)}
+            label={"Choose an OTP method"}
+          />
+        </View>
+        <Button
+          mode="contained"
+          buttonColor={"#0743A1"}
+          style={styles.button}
+          onPress={() => navigation.navigate("OtpVerification")}
+        >
+          Continue
+        </Button>
+      </View>
     </View>
   );
 };
@@ -15,6 +69,23 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: "#C1D7FF",
     flex: 1,
+  },
+  button: {
+    marginBottom: 10,
+    width: "90%",
+    marginLeft: "5%",
+  },
+  cardFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+  },
+  footerText: {
+    fontWeight: "600",
+    fontSize: 14,
+    color: "#0743A1",
+    marginTop: 5,
+    marginBottom: 5,
   },
 });
 export default AdharScreen;

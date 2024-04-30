@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { AdharScreen, OtpVerification } from "./screens";
+import { AdharScreen, OtpVerification, ProfileScreen } from "./screens";
 
 import { IconButton } from "react-native-paper";
 import { StateProvider } from "store";
@@ -34,6 +34,16 @@ function App() {
                 backgroundColor: "#C1D7FF",
               },
               headerTitleAlign: "center",
+            }}
+          />
+
+          <Stack.Screen
+            name="ProfileScreen"
+            component={ProfileScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: "#C1D7FF",
+              },
             }}
           />
         </Stack.Navigator>
