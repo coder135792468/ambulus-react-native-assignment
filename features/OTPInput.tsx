@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     width: "96%",
     marginLeft: "2%",
+    paddingBottom: 10,
   },
   cardTitle: {
     fontSize: 15,

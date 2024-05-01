@@ -12,9 +12,10 @@ const AdharScreen = ({ navigation }) => {
 
   return (
     <View style={styles.screen}>
-      <View style={{ minHeight: 70 }}>
+      <View style={{ minHeight: 100 }}>
         <ScreenTitle
           title={"You're about to create a new abha address using"}
+          subtitle={"ABHA Number"}
         />
       </View>
       <View style={{ backgroundColor: "#e8effd", flex: 1 }}>
@@ -39,9 +40,7 @@ const AdharScreen = ({ navigation }) => {
                   console.log("Contact customer care for assitance")
                 }
               >
-                <Text style={styles.footerText}>
-                  Forgetten Your ABHA Number ?
-                </Text>
+                <Text style={styles.footerText}>Forgetten ABHA Number ?</Text>
               </TouchableOpacity>
             </View>
           }
@@ -82,9 +81,9 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: 16,
     color: "#0743A1",
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 5,
   },
 });

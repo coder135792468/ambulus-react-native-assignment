@@ -21,6 +21,7 @@ function App() {
               headerStyle: {
                 backgroundColor: "#C1D7FF",
               },
+              headerShadowVisible: false,
               headerTitleAlign: "center",
               headerLeft: () => <IconButton icon="arrow-left"></IconButton>,
             }}
@@ -33,6 +34,7 @@ function App() {
               headerStyle: {
                 backgroundColor: "#C1D7FF",
               },
+              headerShadowVisible: false,
               headerTitleAlign: "center",
             }}
           />
@@ -41,9 +43,11 @@ function App() {
             name="ProfileScreen"
             component={ProfileScreen}
             options={{
+              title: "",
               headerStyle: {
                 backgroundColor: "#C1D7FF",
               },
+              headerShadowVisible: false,
             }}
           />
         </Stack.Navigator>
