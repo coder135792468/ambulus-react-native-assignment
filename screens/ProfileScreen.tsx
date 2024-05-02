@@ -1,47 +1,48 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { ScreenTitle } from "components";
-import { Card, Text, Button } from "react-native-paper";
+import React, { useState } from "react";
+import { Image, StyleSheet, View } from "react-native";
+import { ScreenTitle, SecondaryInput } from "components";
+import { Card, Button } from "react-native-paper";
 import { RootState, useSelector } from "../store";
+import { Acknowledge } from "features";
 
 const ProfileScreen = () => {
   const { name, dob, gender, phone, email, address, state, district } =
     useSelector((state: RootState) => state.profile);
-
-  const abhaNumber = "88 2324 2452 2342";
+  const { abhNumberFields } = useSelector((state: RootState) => state.abha);
+  const [disabled, setDisabled] = useState(false);
   return (
     <View style={styles.screen}>
       <ScreenTitle title="Your profile details (as per Aadhaar)" />
       <View style={{ flex: 1, marginTop: 10, width: "92%", marginLeft: "4%" }}>
-        <Card>
-          <Card.Content>
-            <Text variant={"bodyMedium"}>Name</Text>
-            <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-              {name}
-            </Text>
-          </Card.Content>
-
-          <Card.Content
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
+        <Card style={{ paddingTop: 20 }}>
+          <View style={{ flexDirection: "row" }}>
             <View>
-              <Text variant={"bodyMedium"}>Phone</Text>
-              <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-                {dob}
-              </Text>
+              <Card.Content>
+                <SecondaryInput title={"Name"} subtitle={name} />
+              </Card.Content>
+
+              <Card.Content
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <SecondaryInput title={"Phone"} subtitle={phone} />
+                <SecondaryInput
+                  inputStyle={{ paddingHorizontal: 16 }}
+                  title={"Gender"}
+                  subtitle={gender}
+                />
+              </Card.Content>
             </View>
             <View>
-              <Text variant={"bodyMedium"}>Gender</Text>
-              <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-                {gender}
-              </Text>
+              <Image
+                source={require("../assets/empty.png")}
+                style={styles.profileImage}
+              />
             </View>
-          </Card.Content>
+          </View>
 
-          {/* Phone number and email */}
           <Card.Content
             style={{
               flexDirection: "row",
@@ -49,54 +50,36 @@ const ProfileScreen = () => {
               marginTop: 10,
             }}
           >
-            <View>
-              <Text variant={"bodyMedium"}>Date of Birth</Text>
-              <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-                {phone}
-              </Text>
-            </View>
-            <View>
-              <Text variant={"bodyMedium"}>Gender</Text>
-              <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-                {email}
-              </Text>
-            </View>
+            <SecondaryInput title={"Date of Birth"} subtitle={dob} />
+            <SecondaryInput title={"Email"} subtitle={email} />
           </Card.Content>
 
           <Card.Content style={{ marginTop: 10 }}>
-            <Text variant={"bodyMedium"}>Address</Text>
-            <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-              {address}
-            </Text>
+            <SecondaryInput title={"Address"} subtitle={address} />
           </Card.Content>
 
           <Card.Content style={{ marginTop: 10 }}>
-            <Text variant={"bodyMedium"}>State</Text>
-            <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-              {state}
-            </Text>
+            <SecondaryInput title={"State"} subtitle={state} />
           </Card.Content>
 
           <Card.Content style={{ marginTop: 10 }}>
-            <Text variant={"bodyMedium"}>District</Text>
-            <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-              {district}
-            </Text>
+            <SecondaryInput title={"District"} subtitle={district} />
           </Card.Content>
 
           <Card.Content style={{ marginTop: 20 }}>
-            <Text variant={"bodyMedium"}>Your ABHA Number</Text>
-            <Text variant={"bodyLarge"} style={{ fontWeight: "bold" }}>
-              {abhaNumber}
-            </Text>
+            <SecondaryInput
+              title={"Your ABHA Number"}
+              subtitle={abhNumberFields.join(" ")}
+            />
           </Card.Content>
         </Card>
       </View>
-
+      <Acknowledge onChange={(checked) => setDisabled(checked)} />
       <Button
         mode="contained"
         buttonColor={"#0743A1"}
         style={styles.button}
+        disabled={!disabled}
         onPress={() => {}}
       >
         Continue
@@ -114,6 +97,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: "90%",
     marginLeft: "5%",
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    backgroundColor: "black",
+    borderRadius: 20,
   },
 });
 

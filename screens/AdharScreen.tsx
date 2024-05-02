@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { RadioButton, ScreenTitle } from "components";
 import { OtpInput } from "features";
-import { useSelector, RootState } from "../store";
+import {
+  useSelector,
+  useDispatch,
+  setAbhaField,
+  RootState,
+  setIsAbhaCompleted,
+} from "../store";
 import { Button } from "react-native-paper";
 
 const AdharScreen = ({ navigation }) => {
-  const { limits, otpFields, card, verificationMethods } = useSelector(
-    (state: RootState) => state.abha
-  );
+  const { limits, abhNumberFields, card, verificationMethods, isCompleted } =
+    useSelector((state: RootState) => state.abha);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setIsAbhaCompleted());
+  }, []);
 
   return (
     <View style={styles.screen}>
@@ -21,8 +31,11 @@ const AdharScreen = ({ navigation }) => {
       <View style={{ backgroundColor: "#e8effd", flex: 1 }}>
         <OtpInput
           limits={limits}
-          otpFields={otpFields}
+          inputFields={abhNumberFields}
           card={card}
+          handleOtpValue={(otps) => {
+            dispatch(setAbhaField(otps));
+          }}
           verifyButton={
             <Button
               mode="contained"
@@ -56,6 +69,7 @@ const AdharScreen = ({ navigation }) => {
           mode="contained"
           buttonColor={"#0743A1"}
           style={styles.button}
+          disabled={!isCompleted}
           onPress={() => navigation.navigate("OtpVerification")}
         >
           Continue

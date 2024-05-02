@@ -4,13 +4,14 @@ import { Card } from "react-native-paper";
 
 const OtpInput = ({
   limits,
-  otpFields,
+  inputFields,
   card,
   verifyButton = null,
   footer = null,
   inputStyles = {},
+  handleOtpValue = (props) => {},
 }) => {
-  const [otp, setOtp] = useState(otpFields);
+  const [otp, setOtp] = useState(inputFields);
   const inputs = [];
 
   const handleOtpChange = (value, index) => {
@@ -23,6 +24,8 @@ const OtpInput = ({
     if (index == newOtp.length - 1 && value.length === limits[index]) {
       inputs[index].blur();
     }
+
+    handleOtpValue(newOtp);
   };
 
   return (

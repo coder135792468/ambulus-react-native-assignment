@@ -1,41 +1,64 @@
-import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
-import { useSelector, RootState } from "../store";
+import React, { useEffect } from "react";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import {
+  useSelector,
+  RootState,
+  useDispatch,
+  setIsOtpCompleted,
+  setOtpField,
+} from "../store";
 import { ScreenTitle } from "../components";
 import { OtpInput } from "features";
 import { Button } from "react-native-paper";
 
 const OtpVerification = ({ navigation }) => {
-  const { limits, otpFields, card } = useSelector(
+  const { limits, otpFields, card, isCompleted } = useSelector(
     (state: RootState) => state.otp
   );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setIsOtpCompleted());
+  }, []);
 
   return (
     <View style={styles.screen}>
       <View style={{ minHeight: 150 }}>
         <ScreenTitle title="We have send a 6 digit OTP to xxxxx987" />
       </View>
-      <View style={{ flex: 1, backgroundColor: "#e8effd" }}>
+
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#e8effd",
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+        }}
+      >
         <View
           style={{
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
             position: "relative",
-            top: -100,
+            top: -110,
           }}
         >
           <Image source={require("../assets/empty.png")} style={styles.image} />
           <OtpInput
             limits={limits}
-            otpFields={otpFields}
+            inputFields={otpFields}
             card={card}
             inputStyles={styles.inputStyles}
+            handleOtpValue={(otps) => {
+              dispatch(setOtpField(otps));
+            }}
             verifyButton={
               <Button
                 mode="contained"
                 buttonColor={"#0743A1"}
                 style={styles.button}
+                disabled={!isCompleted}
                 onPress={() => navigation.navigate("ProfileScreen")}
               >
                 Verify and continue
@@ -43,8 +66,14 @@ const OtpVerification = ({ navigation }) => {
             }
             footer={
               <View style={styles.cardFooter}>
-                <Text style={styles.footerText}>Didn't receive OTP ?</Text>
-                <Text style={styles.footerText}>Resend OTP</Text>
+                <TouchableOpacity disabled={true}>
+                  <Text style={{ ...styles.footerText, ...{ color: "#555" } }}>
+                    Didn't receive OTP ?
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Text style={styles.footerText}>Resend OTP</Text>
+                </TouchableOpacity>
               </View>
             }
           />
