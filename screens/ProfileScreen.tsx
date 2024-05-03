@@ -13,7 +13,7 @@ const ProfileScreen = () => {
   return (
     <View style={styles.screen}>
       <ScreenTitle title="Your profile details (as per Aadhaar)" />
-      <View style={{ flex: 1, marginTop: 10, width: "92%", marginLeft: "4%" }}>
+      <View style={styles.cardCon}>
         <Card style={{ paddingTop: 20 }}>
           <View style={{ flexDirection: "row" }}>
             <View>
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#C1D7FF",
     flex: 1,
   },
+  cardCon: { flex: 1, marginTop: 10, width: "92%", marginLeft: "4%" },
   button: {
     marginBottom: 10,
     width: "90%",

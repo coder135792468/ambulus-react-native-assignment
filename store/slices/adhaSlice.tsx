@@ -34,8 +34,6 @@ export const adhaSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setIsAbhaCompleted, setAbhaField } = adhaSlice.actions;
 
-// We export the reducer function so that it can be added to the store
 export default adhaSlice.reducer;

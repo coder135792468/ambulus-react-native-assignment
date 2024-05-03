@@ -12,7 +12,7 @@ import { OtpInput } from "features";
 import { Button } from "react-native-paper";
 
 const OtpVerification = ({ navigation }) => {
-  const { limits, otpFields, card, isCompleted } = useSelector(
+  const { limits, otpFields, card, isCompleted, otp } = useSelector(
     (state: RootState) => state.otp
   );
   const dispatch = useDispatch();
@@ -27,23 +27,8 @@ const OtpVerification = ({ navigation }) => {
         <ScreenTitle title="We have send a 6 digit OTP to xxxxx987" />
       </View>
 
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "#e8effd",
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-        }}
-      >
-        <View
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-            top: -110,
-          }}
-        >
+      <View style={styles.otpCon}>
+        <View style={styles.otpBox}>
           <Image source={require("../assets/empty.png")} style={styles.image} />
           <OtpInput
             limits={limits}
@@ -58,7 +43,7 @@ const OtpVerification = ({ navigation }) => {
                 mode="contained"
                 buttonColor={"#0743A1"}
                 style={styles.button}
-                disabled={!isCompleted}
+                disabled={!isCompleted || !(otpFields.join("") === otp)}
                 onPress={() => navigation.navigate("ProfileScreen")}
               >
                 Verify and continue
@@ -66,11 +51,9 @@ const OtpVerification = ({ navigation }) => {
             }
             footer={
               <View style={styles.cardFooter}>
-                <TouchableOpacity disabled={true}>
-                  <Text style={{ ...styles.footerText, ...{ color: "#555" } }}>
-                    Didn't receive OTP ?
-                  </Text>
-                </TouchableOpacity>
+                <Text style={{ ...styles.footerText, ...{ color: "#555" } }}>
+                  Didn't receive OTP ?
+                </Text>
                 <TouchableOpacity>
                   <Text style={styles.footerText}>Resend OTP</Text>
                 </TouchableOpacity>
@@ -96,6 +79,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 10,
+  },
+  otpCon: {
+    flex: 1,
+    backgroundColor: "#e8effd",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  otpBox: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    top: -110,
   },
   footerText: {
     fontWeight: "600",

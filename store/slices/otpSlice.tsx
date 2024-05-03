@@ -4,6 +4,7 @@ const initialState = {
   limits: [1, 1, 1, 1, 1, 1],
   isCompleted: false,
   otpFields: ["", "", "", "", "", ""],
+  otp: "123456",
   card: {
     title: "Enter OTP",
     verifyInput: true,
@@ -28,8 +29,6 @@ export const otpSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setOtpField, setIsOtpCompleted } = otpSlice.actions;
 
-// We export the reducer function so that it can be added to the store
 export default otpSlice.reducer;
